@@ -30,8 +30,6 @@ function App() {
       )
       .then((res) => {
         const roomInfors = Papa.parse(res.data).data;
-
-        console.log(roomInfors);
         setRoomInfor(roomInfors[roomInfors.length - 1]);
       });
   }, []);
@@ -45,7 +43,7 @@ function App() {
       </div>
       <div className="table mx-auto mt-[30px] ">
         <p className="text-[40px] mx-auto font-bold">
-          Lịch học của FSB tại cơ sở Nguyễn Gia Thiều{" "}
+          Lịch học tại cơ sở FSB Hồ Chí Minh
         </p>
         <p id="txtDate" className="mx-auto text-[25px] text-center mb-[10px]">
           {dayjs().format("DD/MM/YYYY")}
