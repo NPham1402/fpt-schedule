@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { useCookies } from "react-cookie";
 
 function App() {
-  const [cookie, setcookie, removecookie] = useCookies("roominfor");
+  const [cookie, setCookie, removeCookie] = useCookies("roominfor");
   const roomList = ["601", "702", "704", "706"];
   const [roomInfor, setRoomInfor] = useState();
   const getHour = () => {
@@ -30,7 +30,13 @@ function App() {
       )
       .then((res) => {
         const roomInfors = Papa.parse(res.data).data;
-        setRoomInfor(roomInfors[roomInfors.length - 1]);
+        console.log(roomInfors[roomInfors.length - 1]);
+        removeCookie("roominfor");
+        setCookie("roominfor", {
+          code: roomInfors[roomInfors.length - 1][0],
+          value: roomInfors[roomInfors.length - 1][1],
+        });
+        setRoomInfor(roomInfors[roomInfors.length - 1][1]);
       });
   }, []);
   return (
@@ -62,7 +68,7 @@ function App() {
               </th>
             </tr>
             {roomInfor &&
-              JSON.parse(roomInfor[1]).map((value, index) => {
+              JSON.parse(roomInfor).map((value, index) => {
                 if (value !== "") {
                   return (
                     <tr id="T702" className="h-[120px]">
