@@ -6,23 +6,28 @@ import logo from "./logo.svg";
 import axios from "axios";
 import Papa from "papaparse";
 import dayjs from "dayjs";
-import { useCookies } from "react-cookie";
 
 function App() {
-  const [cookie, setCookie, removeCookie] = useCookies("roominfor");
   const roomList = ["601", "702", "704", "706"];
+
   const [roomInfor, setRoomInfor] = useState();
+
   const getHour = () => {
     return dayjs().hour();
   };
-  const getFormatCode = () => {
+
+  const getBuoi = () => {
     if (getHour() < 10) {
-      return "S" + dayjs().format("DDMMYYYY");
+      return "sáng";
     } else {
-      if (getHour < 14) return "C" + dayjs().format("DDMMYYYY");
-      else return "T" + dayjs().format("DDMMYYYY");
+      if (getHour() < 14) {
+        return "chiều";
+      } else {
+        return "tối";
+      }
     }
   };
+
   useEffect(() => {
     axios
       .get(
@@ -30,15 +35,10 @@ function App() {
       )
       .then((res) => {
         const roomInfors = Papa.parse(res.data).data;
-        console.log(roomInfors[roomInfors.length - 1]);
-        removeCookie("roominfor");
-        setCookie("roominfor", {
-          code: roomInfors[roomInfors.length - 1][0],
-          value: roomInfors[roomInfors.length - 1][1],
-        });
         setRoomInfor(roomInfors[roomInfors.length - 1][1]);
       });
   }, []);
+
   return (
     <div className="App">
       <img src={logo} alt="logo" className="w-[600px] mx-auto pt-[30px]" />
@@ -49,7 +49,7 @@ function App() {
       </div>
       <div className="table mx-auto mt-[30px] ">
         <p className="text-[40px] mx-auto font-bold">
-          Lịch học tại cơ sở FSB Hồ Chí Minh
+          Lịch học buổi {getBuoi()} tại cơ sở FSB Hồ Chí Minh
         </p>
         <p id="txtDate" className="mx-auto text-[25px] text-center mb-[10px]">
           {dayjs().format("DD/MM/YYYY")}
@@ -83,21 +83,17 @@ function App() {
                       </td>
                     </tr>
                   );
+                } else {
+                  return <></>;
                 }
               })}
           </table>
-          <p
-            id="notification"
-            className="text-[50px] text-[#51c170] font-bold text-center mt-[200px] hidden drop-shadow-[0_1.2px_1.2px_rgba(245,110,35,0.8)]"
-          >
-            Chưa có lịch học
-          </p>
         </div>
       </div>
       <Player
         autoplay
         loop
-        speed={4}
+        speed={5}
         src={animation}
         style={{ height: "600px", width: "600px" }}
       >
