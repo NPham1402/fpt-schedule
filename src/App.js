@@ -16,6 +16,21 @@ function App() {
     return dayjs().hour();
   };
 
+  const getColorFromCode = (code) => {
+    if (code.includes("MM")) {
+      return "#ff9900";
+    }
+    if (code.includes("MSE")) {
+      return "#34a853";
+    }
+    if (code.includes("SEM")) {
+      return "#3c78d8";
+    }
+    if (code.includes("LBM")) {
+      return "#9900ff";
+    }
+  };
+
   const getBuoi = () => {
     if (getHour() < 10) {
       return "sáng";
@@ -59,34 +74,44 @@ function App() {
             id="table"
             className=" border  text-[30px] border-[2px] w-full "
           >
-            <tr className="h-[120px]">
-              <th className="border border-[1.5px] bg-[#F56E23] font-bold text-white">
-                Phòng
-              </th>
-              <th className="border border-[1.5px] bg-[#F56E23] text-white">
-                Lớp
-              </th>
-            </tr>
-            {roomInfor &&
-              JSON.parse(roomInfor).map((value, index) => {
-                if (value !== "") {
-                  return (
-                    <tr id="T702" className="h-[120px]">
-                      <td className="border border-[1.5px] text-center font-bold">
-                        {roomList[index]}
-                      </td>
-                      <td
-                        className="border border-[1.5px] text-center font-bold"
-                        id="V702"
-                      >
-                        {value}
-                      </td>
-                    </tr>
-                  );
-                } else {
-                  return <></>;
-                }
-              })}
+            <thead>
+              <tr className="h-[120px]">
+                <th className="w-1/2 border border-[1.5px] bg-[#F56E23] font-bold text-white">
+                  Phòng
+                </th>
+                <th className="w-1/2 border border-[1.5px] bg-[#F56E23] text-white">
+                  Lớp
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {roomInfor &&
+                JSON.parse(roomInfor).map((value, index) => {
+                  if (value !== "") {
+                    return (
+                      <tr id="T702" className="h-[120px]" key={value}>
+                        <td
+                          className={
+                            "border border-[1.5px] text-center font-bold"
+                          }
+                        >
+                          {roomList[index]}
+                        </td>
+                        <td
+                          style={{
+                            color: getColorFromCode(String(value)),
+                          }}
+                          className={`border  border-[1.5px] text-center font-bold`}
+                          id="V702"
+                        >
+                          {value}
+                        </td>
+                      </tr>
+                    );
+                  }
+                })}
+            </tbody>
           </table>
         </div>
       </div>
