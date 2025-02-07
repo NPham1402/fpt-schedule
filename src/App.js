@@ -7,6 +7,7 @@ import Papa from "papaparse";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import TableRoom from "./Compoent/TableRoom";
+import ImageNoRoom from "./Compoent/ImageNoRoom";
 function App() {
   const [roomInfor, setRoomInfor] = useState();
   const [isNoRoom, setNoRoom] = useState(0);
@@ -35,9 +36,7 @@ function App() {
 
   return (
     <>
-      {isNoRoom === 2 && (
-        <img src={banner} alt="BANNER" className="w-[1080px] h-[1920px]" />
-      )}
+      {isNoRoom === 2 && <ImageNoRoom />}
       {isNoRoom === 1 && <TableRoom roomInfor={roomInfor} />}
       {isNoRoom === 0 && (
         <SkeletonTheme>

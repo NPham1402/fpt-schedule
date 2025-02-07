@@ -1,12 +1,10 @@
 import React from "react";
-import { Player, Controls } from "@lottiefiles/react-lottie-player";
-import logo from "../logo.svg";
-import animation from "../Source/animation.json";
+import logo from "../logo.jpg";
 import dayjs from "dayjs";
 export default function TableRoom(data) {
   const roomInfor = data.roomInfor;
   const getColorFromCode = (code) => {
-    if (code.includes("MM")) {
+    if (code.includes("MM") || code.includes("AI")) {
       return "#ff9900";
     }
     if (code.includes("MSE")) {
@@ -98,18 +96,6 @@ export default function TableRoom(data) {
           </table>
         </div>
       </div>
-      <Player
-        autoplay
-        loop
-        speed={5}
-        src={animation}
-        style={{ height: "600px", width: "600px" }}
-      >
-        <Controls
-          visible={false}
-          buttons={["play", "repeat", "frame", "debug"]}
-        />
-      </Player>
     </div>
   );
 }
